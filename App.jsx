@@ -1,78 +1,119 @@
-import React, {useState} from 'react';
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * Generated with the TypeScript template
+ * https://github.com/react-native-community/react-native-template-typescript
+ *
+ * @format
+ */
+
+import React, {type PropsWithChildren} from 'react';
 import {
-  View,
-  Text,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
   StyleSheet,
-  TouchableOpacity,
-  TextInput,
+  Text,
+  useColorScheme,
+  View,
 } from 'react-native';
 
-const App = () => {
-  // State untuk menyimpan teks input
-  const [inputText, setInputText] = useState('');
+import {
+  Colors,
+  DebugInstructions,
+  Header,
+  LearnMoreLinks,
+  ReloadInstructions,
+} from 'react-native/Libraries/NewAppScreen';
 
-  // Fungsi untuk menangani perubahan teks input
-  const handleInputChange = text => {
-    setInputText(text);
-  };
-
-  // Fungsi untuk menangani tombol "Submit"
-  const handleSubmit = () => {
-    alert(`Teks yang diinput: ${inputText}`);
-    setInputText('');
-  };
-
+const Section: React.FC<
+  PropsWithChildren<{
+    title: string,
+  }>,
+> = ({children, title}) => {
+  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Aplikasi React Native Keren</Text>
-
-      {/* Input teks */}
-      <TextInput
-        style={styles.input}
-        placeholder="Masukkan teks"
-        onChangeText={handleInputChange}
-        value={inputText}
-      />
-
-      {/* Tombol Submit */}
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Submit</Text>
-      </TouchableOpacity>
+    <View style={styles.sectionContainer}>
+      <Text
+        style={[
+          styles.sectionTitle,
+          {
+            color: isDarkMode ? Colors.white : Colors.black,
+          },
+        ]}>
+        {title}
+      </Text>
+      <Text
+        style={[
+          styles.sectionDescription,
+          {
+            color: isDarkMode ? Colors.light : Colors.dark,
+          },
+        ]}>
+        {children}
+      </Text>
     </View>
   );
 };
 
-// Styles
+const App = () => {
+  const isDarkMode = useColorScheme() === 'dark';
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  };
+
+  return (
+    <SafeAreaView style={backgroundStyle}>
+      <StatusBar
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={backgroundStyle.backgroundColor}
+      />
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
+        style={backgroundStyle}>
+        <Header />
+        <View
+          style={{
+            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+          }}>
+          <Section title="Step One">
+            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
+            screen and then come back to see your edits.
+          </Section>
+          <Section title="See Your Changes">
+            <ReloadInstructions />
+          </Section>
+          <Section title="Debug">
+            <DebugInstructions />
+          </Section>
+          <Section title="Learn More">
+            Read the docs to discover what to do next:
+          </Section>
+          <LearnMoreLinks />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#3498db',
+  sectionContainer: {
+    marginTop: 32,
+    paddingHorizontal: 24,
   },
-  header: {
+  sectionTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 20,
+    fontWeight: '600',
   },
-  input: {
-    width: '80%',
-    height: 40,
-    borderColor: '#fff',
-    borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
-    color: '#fff',
-  },
-  button: {
-    backgroundColor: '#2c3e50',
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: '#fff',
+  sectionDescription: {
+    marginTop: 8,
     fontSize: 18,
+    fontWeight: '400',
+  },
+  highlight: {
+    fontWeight: '700',
   },
 });
 
